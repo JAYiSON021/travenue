@@ -1,0 +1,11 @@
+.forg {
+    margin-top: 10px;
+    text-align: left;
+}
+
+.bordered {
+    margin-top: 130px;
+    padding: 30px;
+    border-radius: 2%;
+    box-shadow: 0px 0px 6px darkgray;
+}
