@@ -2,6 +2,25 @@
     session_start();
     include("includes/config.php");
     include("includes/db.php");
+
+    if(isset($_POST['login'])){
+        $email = mysqli_real_escape_string($db, $_POST['email']);
+        $pass = md5($_POST['password']);
+        $query = "SELECT * FROM venue_accts WHERE email='$email' and password='$pass'";
+        $result = $db->query($query);
+        if($row = $result->fetch_assoc()){
+            if($row['status'] == 1){
+                header("Location:myaccount.php");
+                exit();
+            }else{
+                header("Location:login.php?err=" . urldecode("Please activate your account first!"));
+                exit();
+            }
+        }else{
+            header("Location:login.php?err=" . urldecode("Invalid email or password"));
+            exit();
+        }
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -53,7 +72,13 @@
                         <?php echo $_GET['success']; ?>
                     </div>
                 <?php } ?>
-                <form class="form-signin" method='post'>
+                <!-- Display Error Message -->
+                <?php if(isset($_GET['err'])){ ?>
+                    <div class="alert alert-danger">
+                        <?php echo $_GET['err']; ?>
+                    </div>
+                <?php } ?>
+                <form class="form-signin" action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>" method='post'>
                     <center>
                         <h3 class="form-signin-heading">Sign In</h3>
                         <hr>
@@ -69,7 +94,7 @@
                     </label>
                     </div>
                     <br>
-                    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+                    <button class="btn btn-lg btn-primary btn-block" name="login" type="submit">Sign in</button>
                     <center>
                         <div class="forg">
                             <a href="forgot_pass.php">forgot password?</a>
