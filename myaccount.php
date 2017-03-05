@@ -2,6 +2,11 @@
     session_start();
     include("includes/config.php");
     include("includes/db.php");
+    include("includes/check.php");
+    if(!isLoggedIn()){
+      header("Location:login.php?err=" . urldecode("Please login to view your account"));
+      exit();
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -13,18 +18,19 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" href="img/travenue.ico">
-    <title>Forgot Password | TRAVENUE</title>
+    <title>VENUE Dashboard | TRAVENUE</title>
     <!-- Bootstrap core CSS -->
     <link href="bootstrap/css/bootstrap.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
     <link href="css/dashboard.css" rel="stylesheet">
+    <link href="css/animate.css" rel="stylesheet">
     <script src="js/jquery-3.1.1.js"></script>
     <script src="bootstrap/js/bootstrap.min.js"></script>
   </head>
 
   <body>
 
-    <nav class="navbar navbar-inverse navbar-fixed-top">
+    <nav class="navbar navbar-inverse navbar-fixed-top animated fadeIn">
       <div class="container-fluid">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -33,18 +39,17 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Project name</a>
+          <a class="navbar-brand" href="index.php">TRAVENUE</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="#">Dashboard</a></li>
-            <li><a href="#">Settings</a></li>
-            <li><a href="#">Profile</a></li>
-            <li><a href="#">Help</a></li>
+            <li><a href="logout.php">Logout</a></li>
+            <?php if(isset($_SESSION['vemail'])){ ?>
+                <li><a href="#"><?php echo $_SESSION['vemail'];?></a></li>
+            <?php }else if(isset($_COOKIE['vemail'])){ ?>
+                <li><a href="#"><?php echo $_COOKIE['vemail'];?></a></li>
+            <?php } ?>
           </ul>
-          <form class="navbar-form navbar-right">
-            <input type="text" class="form-control" placeholder="Search...">
-          </form>
         </div>
       </div>
     </nav>

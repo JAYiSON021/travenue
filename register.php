@@ -2,7 +2,11 @@
     session_start();
     include("includes/config.php");
     include("includes/db.php");
-
+    include("includes/check.php");
+    if(isLoggedIn()){
+      header("Location:myaccount.php");
+      exit();
+    }
     function isUnique($vemail){
         $query = "SELECT * FROM  venue_accts WHERE email ='$vemail'";
         global $db;
@@ -38,7 +42,7 @@
             if($result){
                 $_SESSION['vname'] = "";
                 $_SESSION['vemail'] = "";
-                $message = "Complete your registration by activating your account. Please click this link: http://localhost/phpvenue/activate.php?token=$token";
+                $message = "Complete your registration by activating your account. Please click this link: http://localhost/travenue/activate.php?token=$token";
                 mail($vmail, 'Activate Venue Account', $message, 'From sanagustinjaysson@gmail.com');
                 header("Location:login.php?success=" . urldecode("Venue registration Successful! please check your email for activation."));
                 exit();
@@ -63,13 +67,14 @@
     <!-- Bootstrap core CSS -->
     <link href="bootstrap/css/bootstrap.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
+    <link href="css/animate.css" rel="stylesheet">
     <script src="js/jquery-3.1.1.js"></script>
     <script src="bootstrap/js/bootstrap.min.js"></script>
   </head>
 
   <body>
 <!-- Fixed navbar -->
-    <nav class="navbar navbar-default navbar-fixed-top">
+    <nav class="navbar navbar-inverse navbar-fixed-top animated fadeIn">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -103,13 +108,13 @@
                     </center>
                     <!-- Display Error Message -->
                     <?php if(isset($_GET['err'])){ ?>
-                        <div class="alert alert-danger">
+                        <div class="alert alert-danger animated fadeInDown">
                             <?php echo $_GET['err']; ?>
                         </div>
                     <?php } ?>
                     <!-- Display Success Message -->
                     <?php if(isset($_GET['success'])){ ?>
-                        <div class="alert alert-success">
+                        <div class="alert alert-success animated fadeInDown">
                             <?php echo $_GET['success']; ?>
                         </div>
                     <?php } ?>
