@@ -18,7 +18,7 @@
 
     if(isset($_POST['register'])){
         $_SESSION['vname'] = $_POST['vname'];
-        $_SESSION['vemail'] = $_POST['vemail'];
+        $_SESSION['vmail'] = $_POST['vemail'];
 
         if(strlen($_POST['vname']) < 6){
             header("Location:register.php?err=" . urldecode("The venue name must be atleast 6 characters long"));
@@ -122,7 +122,7 @@
                     <input type="text" id="inputName" name="vname" class="form-control" placeholder="Venue name" value="<?php echo @$_SESSION['vname']; ?>" required autofocus>
                     <br>
 <!-- email-->       <label for="inputEmail" class="sr-only">Email address</label>
-                    <input type="email" id="inputEmail" name="vemail" class="form-control" placeholder="Email address" value="<?php echo @$_SESSION['vemail']; ?>" required autofocus>
+                    <input type="email" id="inputEmail" name="vemail" class="form-control" placeholder="Email address" value="<?php echo @$_SESSION['vmail']; ?>" required autofocus>
                     <br>
 <!-- password-->    <label for="inputPassword" class="sr-only">Password</label>
                     <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required>
