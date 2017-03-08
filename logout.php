@@ -3,6 +3,6 @@
     $_SESSION['vemail'] = "";
     setcookie("vemail", "", time()-60*60*24*15);
     session_destroy();
-    header("Location:index.php?logout=" . urldecode("success log out"));
+    header("Location:login.php");
     exit();
 ?>

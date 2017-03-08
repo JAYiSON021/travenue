@@ -2,6 +2,7 @@
     session_start();
     include("includes/config.php");
     include("includes/db.php");
+    include("includes/check.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -21,9 +22,8 @@
     <link href="css/style.css" rel="stylesheet">
     <link href="css/carousel.css" rel="stylesheet">
     <link href="css/animate.css" rel="stylesheet">
-
-    <script src="js/jquery-3.1.1.js"></script>
-    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <!-- Custom Fonts -->
+    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
   </head>
 
   <body>
@@ -38,33 +38,61 @@
         <li data-target="#myCarousel" data-slide-to="2"></li>
       </ol>
       <div class="carousel-inner" role="listbox">
-        <div class="item active">
-          <img class="first-slide" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="First slide">
+      <div class="item active">
+          <img class="second-slide" style="background-image: url(img/4.png);background-size: cover;background-repeat: no-repeat;background-position: 50% 50%;" alt="Second slide">
           <div class="container">
             <div class="carousel-caption">
-              <h1>Example headline.</h1>
-              <p>Note: If you're viewing this page via a <code>file://</code> URL, the "next" and "previous" Glyphicon buttons on the left and right might not load/display properly due to web browser security rules.</p>
-              <p><a class="btn btn-lg btn-primary" href="#" role="button">Sign up today</a></p>
+            <div class="row">
+                <div class="col-md-6 col-sm-6 animated fadeIn">
+                  <h2>Bookings in Calendar</h2>
+                  <p>Easily manage and view your bookings with your own venue calendar</p>
+                  <?php if(!isLoggedIn()){?>
+                    <p><a class="btn btn-lg btn-primary" href="register.php" role="button">Register Now!</a></p>
+                  <?php }else{?>
+                    <p><a class="btn btn-lg btn-primary" href="myaccount.php?viewmode=calendar" role="button">Go to Calendar</a></p>
+                  <?php }?>
+                </div>
+                <div class="col-md-6 col-sm-6 animated fadeIn">
+                  <img src="img/index-calendar.png" alt="calendar" width="90%" style="border-radius: 5%;">
+                </div>
+            </div>
             </div>
           </div>
         </div>
         <div class="item">
-          <img class="second-slide" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Second slide">
+          <img class="first-slide" style="background-image: url(img/3.png);background-size: cover;background-repeat: no-repeat;background-position: 50% 50%;" alt="First slide">
           <div class="container">
             <div class="carousel-caption">
-              <h1>Another example headline.</h1>
-              <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-              <p><a class="btn btn-lg btn-primary" href="#" role="button">Learn more</a></p>
+            <div class="row">
+              <div class="col-md-8 col-sm-6" style="margin-top: 50px;">
+                <h2>Easy venue management</h2>
+                <p>Built on top of latest and innovative technology, booking has its advance features to keep track of the bookings in your venues.</p>
+                <?php if(!isLoggedIn()){?>
+                  <p><a class="btn btn-lg btn-primary" href="register.php" role="button">Register Now!</a></p>
+                <?php }else{?>
+                  <p><a class="btn btn-lg btn-primary" href="myaccount.php" role="button">Go to Dashboard</a></p>
+                <?php }?>
+              </div>
+              <div class="col-md-4 col-sm-6">
+                <img src="img/manage.png" width="100%" style="margin-top: 80px;">
+              </div>
+            </div>
             </div>
           </div>
         </div>
         <div class="item">
-          <img class="third-slide" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Third slide">
+          <img class="third-slide" style="background-image: url(img/2.png);background-size: cover;background-repeat: no-repeat;background-position: 50% 50%;" alt="Third slide">
           <div class="container">
             <div class="carousel-caption">
-              <h1>One more for good measure.</h1>
-              <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-              <p><a class="btn btn-lg btn-primary" href="#" role="button">Browse gallery</a></p>
+            <div class="row">
+              <div class="col-md-4 col-sm-6 animated fadeIn">
+                <h2>Cross Platform Solution</h2>
+                <p>Access your venue on all types of devices Anytime, Anywhere.</p>
+              </div>
+              <div class="col-md-8 col-sm-6 animated fadeIn">
+                <img src="img/cross-platform.png" alt="calendar" width="95%" style="border-radius: 5%;">
+              </div>
+            </div>
             </div>
           </div>
         </div>
@@ -84,7 +112,8 @@
     <!-- Wrap the rest of the page in another container to center all the content. -->
 
     <div class="container marketing">
-
+      <center><h1>How it works?</h1></center>
+      <br>
       <!-- Three columns of text below the carousel -->
       <div class="row">
         <div class="col-lg-4">
@@ -153,9 +182,11 @@
       <!-- FOOTER -->
       <footer>
         <p class="pull-right"><a href="#">Back to top</a></p>
-        <p>&copy; 2016 Company, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
+        <p>&copy; Team PLP Venue Reservation &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
       </footer>
 
     </div><!-- /.container -->
+    <script src="js/jquery-3.1.1.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
   </body>
 </html>

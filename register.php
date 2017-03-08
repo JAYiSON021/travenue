@@ -68,6 +68,8 @@
     <link href="bootstrap/css/bootstrap.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
     <link href="css/animate.css" rel="stylesheet">
+    <!-- Custom Fonts -->
+    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <script src="js/jquery-3.1.1.js"></script>
     <script src="bootstrap/js/bootstrap.min.js"></script>
   </head>
@@ -87,8 +89,9 @@
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="login.php">Sign In</a></li>
-                    <li class="active"><a href="register.php">Register</a></li>
+                    <li><a href="login.php"><i class="fa fa-sign-in" aria-hidden="true"></i> Sign In</a></li>
+                    <li><a href="register.php"><i class="fa fa-list-alt" aria-hidden="true"></i> Register</a></li>
+                    <li><p class="navbar-btn"><a href="#" class="btn btn-default"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Venue Search</a></p></li>
                 </ul>
             </div><!--/.nav-collapse -->
         </div>  
@@ -134,7 +137,12 @@
                 </form>
             </div>
         </div>
-        <br><br><br><br>
+        <hr class="featurette-divider">
+        <!-- FOOTER -->
+        <footer>
+            <!--<p class="pull-right"><a href="#">Back to top</a></p>-->
+            <center><p>&copy; 2017 Team PLP Venue Reservation. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p></center>
+        </footer>
     </div> <!-- /container -->
   </body>
 </html>

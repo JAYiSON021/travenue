@@ -17,13 +17,15 @@
     <!-- Bootstrap core CSS -->
     <link href="bootstrap/css/bootstrap.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <script src="js/jquery-3.1.1.js"></script>
     <script src="bootstrap/js/bootstrap.min.js"></script>
   </head>
 
   <body>
 <!-- Fixed navbar -->
-    <nav class="navbar navbar-default navbar-fixed-top">
+    <nav class="navbar navbar-inverse navbar-fixed-top animated fadeIn">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -36,11 +38,12 @@
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="login.php">Sign In</a></li>
-                    <li><a href="register.php">Register</a></li>
+                    <li><a href="login.php"><i class="fa fa-sign-in" aria-hidden="true"></i> Sign In</a></li>
+                    <li><a href="register.php"><i class="fa fa-list-alt" aria-hidden="true"></i> Register</a></li>
+                    <li><p class="navbar-btn"><a href="#" class="btn btn-default"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Venue Search</a></p></li>
                 </ul>
             </div><!--/.nav-collapse -->
-        </div>
+        </div>  
     </nav>
 <!-- /Fixed navbar -->
 
