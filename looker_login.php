@@ -3,29 +3,25 @@
     require_once("includes/config.php");
     require_once("includes/db.php");
     require("includes/check.php");
-    if(isLoggedIn()){
-      header("Location:myaccount.php?viewmode=" . urlencode("dashboard"));
+    if(isLoggedInLooker()){
+      header("Location:search.php");
       exit();
     }
+
     if(isset($_POST['login'])){
         $email = mysqli_real_escape_string($db, $_POST['email']);
         $pass = md5($_POST['password']);
-        $query = "SELECT * FROM admins WHERE email='$email' and password='$pass'";
+        $query = "SELECT * FROM lookers WHERE email='$email' and password='$pass'";
         $result = $db->query($query);
         if($row = $result->fetch_assoc()){
-            if($row['isActivated'] == 1){
-                $_SESSION['ademail'] = $email;
-                if(isset($_POST['remember'])){
-                    setcookie("ademail", $email, time()+60*60*24*15);
-                }
-                header("Location:myaccount.php?viewmode=" . urlencode("dashboard"));
-                exit();
-            }else{
-                header("Location:login.php?err=" . urldecode("Please activate your account first before logging in"));
-                exit();
+            $_SESSION['lookemail'] = $email;
+            if(isset($_POST['remember'])){
+                setcookie("lookemail", $email, time()+60*60*24*15);
             }
+            header("Location:search.php");
+            exit();
         }else{
-            header("Location:login.php?err=" . urldecode("Invalid email or password"));
+            header("Location:looker_login.php?err=" . urldecode("Invalid email or password"));
             exit();
         }
     }
@@ -53,9 +49,9 @@
     <script src="bootstrap/js/bootstrap.min.js"></script>
   </head>
 
-  <body style="background-image: url(img/bgapple.jpg);background-size: cover;background-repeat: no-repeat;background-position: 50% 50%;">
+  <body style="background-image: url(img/22.png);background-size: cover;background-repeat: no-repeat;background-position: 50% 50%;">
 <!-- Fixed navbar -->
-    <nav class="navbar navbar-inverse navbar-fixed-top animated fadeIn" style="background-color: #3a3a3a; color: #fff">
+    <nav class="navbar navbar-inverse navbar-fixed-top animated fadeIn">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -64,18 +60,18 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.php">
-                    <img src="img/gravenu.png" width=100px alt="Brand">
+                <a class="navbar-brand" href="search.php">
+                    <img src="img/gravenu2.png" width=100px alt="Brand">
                 </a>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="search.php">Search Venue</a></li>
+                    <li><a href="index.php">Venue Admin</a></li>
                     <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Venue Admin <span class="caret"></span></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Venue looker <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="login.php"><i class="fa fa-sign-in" aria-hidden="true"></i> Sign In</a></li>
-                            <li><a href="register.php"><i class="fa fa-list-alt" aria-hidden="true"></i> Register</a></li>
+                            <li><a href="looker_login.php"><i class="fa fa-sign-in" aria-hidden="true"></i> Sign In</a></li>
+                            <li><a href="looker_register.php"><i class="fa fa-list-alt" aria-hidden="true"></i> Register</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -105,8 +101,8 @@
                             <h3 class="form-signin-heading">Sign In</h3>
                             <br>
                                 <ul class="nav nav-pills nav-justified">
-                                    <li role="presentation" class="active"><a href="">Venue Admin</a></li>
-                                    <li role="presentation"><a href="looker_login.php">Venue Looker</a></li>
+                                    <li role="presentation"><a href="login.php">Venue Admin</a></li>
+                                    <li role="presentation" class="active"><a href="">Venue Looker</a></li>
                                 </ul>
                             <br>
                         </center>
@@ -121,7 +117,7 @@
                         </label>
                         </div>
                         <button class="btn btn-primary btn-block"  name="login" type="submit">Sign In</button>
-                        <a href="register.php" class="btn btn-default btn-block"> REGISTER</a>
+                        <a href="looker_register.php" class="btn btn-default btn-block"> REGISTER</a>
                         <center>
                             <div class="forg">
                                 <a href="forgot_pass.php">forgot password?</a>

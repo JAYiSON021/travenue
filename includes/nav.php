@@ -1,6 +1,6 @@
 
 <!-- Fixed navbar -->
-    <nav class="navbar navbar-inverse navbar-fixed-top animated fadeIn">
+    <nav class="navbar navbar-inverse navbar-fixed-top animated fadeIn" style="background-color: #3a3a3a; color: #fff">
       <div class="container">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -9,16 +9,23 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="index.php">TRAVENUE</a>
+          <a class="navbar-brand" href="index.php">
+            <img src="img/gravenu.png" width=100px alt="Brand">
+          </a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
             <?php if(!isLoggedIn()){?>
-              <li><a href="login.php"><i class="fa fa-sign-in" aria-hidden="true"></i> Sign In</a></li>
-              <li><a href="register.php"><i class="fa fa-list-alt" aria-hidden="true"></i> Register</a></li>
-              <li><p class="navbar-btn"><a href="#" class="btn btn-default"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Venue Search</a></p></li>
+            <li><a href="search.php">Search Venue</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Venue Admin <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                  <li><a href="login.php"><i class="fa fa-sign-in" aria-hidden="true"></i> Sign In</a></li>
+                  <li><a href="register.php"><i class="fa fa-list-alt" aria-hidden="true"></i> Register</a></li>
+              </ul>
+            </li>
             <?php }else{?>
-              <li><a href="myaccount.php"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a></li>
+              <li><a href="myaccount.php?viewmode=dashboard"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a></li>
               <li><a href="#" data-toggle="modal" data-target=".bs-example-modal-sm"><i class="fa fa-sign-out"></i> Sign out</a></li>
             <?php }?>
           </ul>

@@ -19,11 +19,12 @@
     <link href="css/style.css" rel="stylesheet">
     <link href="css/animate.css" rel="stylesheet">
     <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="vendor/bootstrap-social/bootstrap-social.css" rel="stylesheet">
     <script src="js/jquery-3.1.1.js"></script>
     <script src="bootstrap/js/bootstrap.min.js"></script>
   </head>
 
-  <body>
+  <body style="background-image: url(img/bgapple.jpg);background-size: cover;background-repeat: no-repeat;background-position: 50% 50%;">
 <!-- Fixed navbar -->
     <nav class="navbar navbar-inverse navbar-fixed-top animated fadeIn">
         <div class="container">
@@ -63,5 +64,7 @@
             </div>
         </div>
     </div> <!-- /container -->
+    <br><br>
+    <?php include("includes/footer.php"); ?>
   </body>
 </html>

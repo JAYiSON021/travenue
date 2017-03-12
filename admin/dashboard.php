@@ -19,7 +19,7 @@
                         </div>
                     </div>
                 </div>
-                <a href="#">
+                <a href="myaccount.php?viewmode=bookings">
                     <div class="panel-footer">
                         <span class="pull-left">View Details</span>
                         <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -37,11 +37,11 @@
                         </div>
                         <div class="col-xs-9 text-right">
                             <div class="huge">0</div>
-                            <div>Booking Requests</div>
+                            <div>Book Requests</div>
                         </div>
                     </div>
                 </div>
-                <a href="#">
+                <a href="myaccount.php?viewmode=bookreqs">
                     <div class="panel-footer">
                         <span class="pull-left">View Details</span>
                         <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -85,7 +85,7 @@
                         </div>
                     </div>
                 </div>
-                <a href="#">
+                <a href="myaccount.php?viewmode=alerts">
                     <div class="panel-footer">
                         <span class="pull-left">View Details</span>
                         <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>

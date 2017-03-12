@@ -1,57 +1,14 @@
 <?php
     session_start();
-    include("includes/config.php");
-    include("includes/db.php");
-    include("includes/check.php");
+    require_once("includes/config.php");
+    require_once("includes/db.php");
+    require("includes/check.php");
+
     if(isLoggedIn()){
-      header("Location:myaccount.php");
+      header("Location:myaccount.php?viewmode=dashboard");
       exit();
     }
-    function isUnique($vemail){
-        $query = "SELECT * FROM  venue_accts WHERE email ='$vemail'";
-        global $db;
-        $result = $db->query($query);
-        if($result->num_rows > 0){
-            return false;
-        }else return true;
-    } 
-
-    if(isset($_POST['register'])){
-        $_SESSION['vname'] = $_POST['vname'];
-        $_SESSION['vmail'] = $_POST['vemail'];
-
-        if(strlen($_POST['vname']) < 6){
-            header("Location:register.php?err=" . urldecode("The venue name must be atleast 6 characters long"));
-            exit();
-        }else if($_POST['password'] != $_POST['conpassword']){
-            header("Location:register.php?err=" . urldecode("Passwords dot not match"));
-            exit();
-        }else if(strlen($_POST['password']) < 6 || strlen($_POST['conpassword'] < 6)){
-            header("Location:register.php?err=" . urldecode("Passwords must be atleast 6 characters long"));
-            exit();
-        }else if(!isUnique($_POST['vemail'])){
-            header("Location:register.php?err=" . urldecode("Email is already in use."));
-            exit();
-        }else{
-            $vname = mysqli_real_escape_string($db, $_POST['vname']);
-            $vmail = mysqli_real_escape_string($db, $_POST['vemail']);
-            $pass = md5($_POST['conpassword']);
-            $token = bin2hex(openssl_random_pseudo_bytes(32));
-            $query = "INSERT INTO venue_accts (venue_name, email, password, token) VALUES ('$vname','$vmail','$pass','$token')";
-            $result = mysqli_query($db,$query);
-            if($result){
-                $_SESSION['vname'] = "";
-                $_SESSION['vemail'] = "";
-                $message = "Complete your registration by activating your account. Please click this link: http://localhost/travenue/activate.php?token=$token";
-                mail($vmail, 'Activate Venue Account', $message, 'From sanagustinjaysson@gmail.com');
-                header("Location:login.php?success=" . urldecode("Venue registration Successful! please check your email for activation."));
-                exit();
-            }else{
-                header("Location:register.php?err=" . urldecode("Failed to register the user."));
-                exit();
-            }
-        }
-    }
+    include("admin/trans_registration.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -70,13 +27,14 @@
     <link href="css/animate.css" rel="stylesheet">
     <!-- Custom Fonts -->
     <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="vendor/bootstrap-social/bootstrap-social.css" rel="stylesheet">
     <script src="js/jquery-3.1.1.js"></script>
     <script src="bootstrap/js/bootstrap.min.js"></script>
   </head>
 
-  <body>
+  <body style="background-image: url(img/bgapple.jpg);background-size: cover;background-repeat: no-repeat;background-position: 50% 50%;">
 <!-- Fixed navbar -->
-    <nav class="navbar navbar-inverse navbar-fixed-top animated fadeIn">
+    <nav class="navbar navbar-inverse navbar-fixed-top animated fadeIn" style="background-color: #3a3a3a; color: #fff">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -85,13 +43,20 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.php">TRAVENUE</a>
+                <a class="navbar-brand" href="index.php">
+                    <img src="img/gravenu.png" width=100px alt="Brand">
+                </a>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="login.php"><i class="fa fa-sign-in" aria-hidden="true"></i> Sign In</a></li>
-                    <li><a href="register.php"><i class="fa fa-list-alt" aria-hidden="true"></i> Register</a></li>
-                    <li><p class="navbar-btn"><a href="#" class="btn btn-default"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Venue Search</a></p></li>
+                    <li><a href="search.php">Search Venue</a></li>
+                    <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Venue Admin <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="login.php"><i class="fa fa-sign-in" aria-hidden="true"></i> Sign In</a></li>
+                            <li><a href="register.php"><i class="fa fa-list-alt" aria-hidden="true"></i> Register</a></li>
+                        </ul>
+                    </li>
                 </ul>
             </div><!--/.nav-collapse -->
         </div>  
@@ -103,11 +68,16 @@
 <!-- Shows the error messages if set-->
             
 <!-- The REgistration Form -->
-            <div class="col-md-4 col-md-offset-4 bordered">
+            <div class="col-md-10 col-md-offset-1 bordered" style="background-color: #fff;">
                 <form class="form-signin" action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>" method='post'>
                     <center>
-                        <h3 class="form-signin-heading">Register</h3>
-                        <hr>
+                        <h3 class="form-signin-heading">Venue Registration</h3>
+                        <br>
+                        <ul class="nav nav-pills nav-justified">
+                            <li role="presentation" class="active"><a href="">Venue Admin</a></li>
+                            <li role="presentation"><a href="looker_register.php">Venue Looker</a></li>
+                        </ul>
+                        <br><br>
                     </center>
                     <!-- Display Error Message -->
                     <?php if(isset($_GET['err'])){ ?>
@@ -121,28 +91,74 @@
                             <?php echo $_GET['success']; ?>
                         </div>
                     <?php } ?>
-<!-- name-->        <label for="inputNamel" class="sr-only">Venue name</label>
-                    <input type="text" id="inputName" name="vname" class="form-control" placeholder="Venue name" value="<?php echo @$_SESSION['vname']; ?>" required autofocus>
-                    <br>
-<!-- email-->       <label for="inputEmail" class="sr-only">Email address</label>
-                    <input type="email" id="inputEmail" name="vemail" class="form-control" placeholder="Email address" value="<?php echo @$_SESSION['vmail']; ?>" required autofocus>
-                    <br>
-<!-- password-->    <label for="inputPassword" class="sr-only">Password</label>
-                    <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required>
-                    <br>
-<!-- password again--><label for="inputConPassword" class="sr-only">Password</label>
-                    <input type="password" id="inputConPassword" name="conpassword" class="form-control" placeholder="Confirm password" required>
-                    <br>
-                    <button class="btn btn-lg btn-primary btn-block" name="register" type="submit">Register</button>
+                    <div class="row">
+                        <!--venue registration-->
+                        <div class="col-md-6" style="border-right: 2px dashed #e0e0e0; padding-right: 30px">
+                            <center><legend style="color: #2196f3;">Venue Details</legend></center>
+                            <!-- venue name-->
+                            <label for="inputNamel">Venue name</label>
+                            <input type="text" id="inputName" name="vname" class="form-control" placeholder="Venue name / title" value="<?php echo @$_SESSION['vname']; ?>" required autofocus>
+                            <br>
+                            <!-- email-->
+                            <label for="inputVenueEmail">Venue Email address</label>
+                            <input type="email" id="inputVenueEmail" name="vemailadd" class="form-control" placeholder="Email address" value="<?php echo @$_SESSION['vemailadd']; ?>" required autofocus>
+                            <br>
+                            <!-- Contact Number-->
+                            <label for="inputCNumber">Venue Contact number</label>
+                            <input type="text" id="inputCNumber" name="vcontactnum" class="form-control" placeholder="Contact number" value="<?php echo @$_SESSION['vcontactnum']; ?>" required autofocus>
+                            <br>
+                            <!-- CITY-->
+                            <label for="inputVenueCity">City</label>
+                            <input type="text" id="inputVenueCity" name="vcity" class="form-control" placeholder="City" value="<?php echo @$_SESSION['vcity']; ?>" required autofocus>
+                            <br>
+                            <!-- BRGY-->
+                            <label for="inputVenueBarangay">Barangay</label>
+                            <input type="text" id="inputVenueBarangay" name="vbrgy" class="form-control" placeholder="Barangay" value="<?php echo @$_SESSION['vbrgy']; ?>" required autofocus>
+                            <br>
+                            <!-- St Address-->
+                            <label for="inputVenueStreetAddress">Street Address</label>
+                            <input type="text" id="inputVenueStreetAddress" name="vstadd" class="form-control" placeholder="Street Address" value="<?php echo @$_SESSION['vstadd']; ?>" required autofocus>
+                            <br>
+                            <!-- Landmark-->
+                            <label for="inputVenueLandmark">Landmark</label>
+                            <input type="text" id="inputVenueLandmark" name="vlmark" class="form-control" placeholder="Landmark" value="<?php echo @$_SESSION['vlmark']; ?>" required autofocus>
+                            <span class="help-block">This will help us to quickly locate your venue.</span>
+                            <br>
+                        </div>
+                        <!--Admin registration-->
+                        <div class="col-md-6" style="padding-left: 30px">
+                            <center><legend style="color: #2196f3;">Admin Details</legend></center>
+                            <!-- Fullname-->
+                            <label for="inputFullname">Admin's Fullname</label>
+                            <input type="text" id="inputFullname" name="adfn" class="form-control" placeholder="Admin's Fullname" value="<?php echo @$_SESSION['adfn']; ?>" required autofocus>
+                            <br>
+                            <!-- email-->
+                            <label for="inputEmail">Email address</label>
+                            <input type="email" id="inputEmail" name="regAdemail" class="form-control" placeholder="Email address" value="<?php echo @$_SESSION['regAdemail']; ?>" required autofocus>
+                            <br>
+                            <!-- password-->
+                            <label for="inputPassword">Password</label>
+                            <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required>
+                            <br>
+                            <!-- password again-->
+                            <label for="inputConPassword">Confirm Password</label>
+                            <input type="password" id="inputConPassword" name="conpassword" class="form-control" placeholder="Confirm password" required>
+                            <br>
+                        </div>
+                        <div class="col-md-12">
+                             <br>
+                            <center>
+                                <button class="btn btn-lg btn-primary" name="register" type="submit">Register</button>
+                                <a href="login.php" class="btn btn-lg btn-default"> Go to Sign In</a>
+                            </center>
+                        </div>
+                    </div>
                 </form>
             </div>
         </div>
+        <br>
         <hr class="featurette-divider">
-        <!-- FOOTER -->
-        <footer>
-            <!--<p class="pull-right"><a href="#">Back to top</a></p>-->
-            <center><p>&copy; 2017 Team PLP Venue Reservation. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p></center>
-        </footer>
+        <?php include("includes/footer.php"); ?>
     </div> <!-- /container -->
   </body>
 </html>

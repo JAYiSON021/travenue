@@ -4,6 +4,7 @@
     include("includes/db.php");
     include("includes/check.php");
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -28,87 +29,73 @@
     <link href="dist/css/sb-admin-2.css" rel="stylesheet">
   </head>
 
-  <body style="background-image: url(img/bgapple.jpg);background-size: cover;background-repeat: no-repeat;background-position: 50% 50%;">
-    <?php include("includes/nav.php") ?>
-     <!-- Carousel
-    ================================================== -->
-    <div id="myCarousel" class="carousel slide" data-ride="carousel">
-      <!-- Indicators -->
-      <ol class="carousel-indicators">
-        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-        <li data-target="#myCarousel" data-slide-to="1"></li>
-        <li data-target="#myCarousel" data-slide-to="2"></li>
-      </ol>
-      <div class="carousel-inner" role="listbox">
-      <div class="item active">
-          <img class="second-slide" style="background-image: url(img/4.png);background-size: cover;background-repeat: no-repeat;background-position: 50% 50%;" alt="Second slide">
-          <div class="container">
-            <div class="carousel-caption">
-            <div class="row">
-                <div class="col-md-6 col-sm-6 animated fadeIn">
-                  <h2>Bookings in Calendar</h2>
-                  <p>Easily manage and view your bookings with your own venue calendar</p>
-                  <?php if(!isLoggedIn()){?>
-                    <p><a class="btn btn-lg btn-primary" href="register.php" role="button">Register Now!</a></p>
-                  <?php }else{?>
-                    <p><a class="btn btn-lg btn-primary" href="myaccount.php?viewmode=calendar" role="button">Go to Calendar</a></p>
-                  <?php }?>
-                </div>
-                <div class="col-md-6 col-sm-6 animated fadeIn">
-                  <img src="img/index-calendar.png" alt="calendar" width="90%" style="border-radius: 5%;">
-                </div>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top animated fadeIn">
+        <div class="container">
+            <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="search.php">
+                <img src="img/gravenu2.png" width=100px alt="Brand">
+            </a>
             </div>
-            </div>
-          </div>
-        </div>
-        <div class="item">
-          <img class="first-slide" style="background-image: url(img/3.png);background-size: cover;background-repeat: no-repeat;background-position: 50% 50%;" alt="First slide">
-          <div class="container">
-            <div class="carousel-caption">
-            <div class="row">
-              <div class="col-md-8 col-sm-6" style="margin-top: 50px;">
-                <h2>Easy venue management</h2>
-                <p>Built on top of latest and innovative technology, booking has its advance features to keep track of the bookings in your venues.</p>
-                <?php if(!isLoggedIn()){?>
-                  <p><a class="btn btn-lg btn-primary" href="register.php" role="button">Register Now!</a></p>
+            <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <?php if(!isLoggedInLooker()){?>
+                    <li><a href="index.php">Venue Admin</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Venue Looker <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="looker_login.php"><i class="fa fa-sign-in" aria-hidden="true"></i> Sign In</a></li>
+                            <li><a href="looker_register.php"><i class="fa fa-list-alt" aria-hidden="true"></i> Register</a></li>
+                        </ul>
+                    </li>
                 <?php }else{?>
-                  <p><a class="btn btn-lg btn-primary" href="myaccount.php?viewmode=dashboard" role="button">Go to Dashboard</a></p>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?php if(isset($_SESSION['lookemail'])){echo $_SESSION['lookemail'];}else if(isset($_COOKIE['lookemail'])){$_SESSION['lookemail'] = $_COOKIE['lookemail'];echo $_COOKIE['lookemail'];}else{echo "User";}?> <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href=""><i class="fa fa-user"></i> Account</a></li>
+                            <li><a href="logout_looker.php"><i class="fa fa-sign-out"></i> Sign out</a></li>
+                        </ul>
+                    </li>
                 <?php }?>
-              </div>
-              <div class="col-md-4 col-sm-6">
-                <img src="img/manage.png" width="100%" style="margin-top: 80px;">
-              </div>
-            </div>
-            </div>
-          </div>
+            </ul>
+            </div><!--/.nav-collapse -->
         </div>
-        <div class="item">
-          <img class="third-slide" style="background-image: url(img/2.png);background-size: cover;background-repeat: no-repeat;background-position: 50% 50%;" alt="Third slide">
-          <div class="container">
-            <div class="carousel-caption">
-            <div class="row">
-              <div class="col-md-4 col-sm-6 animated fadeIn">
-                <h2>Cross Platform Solution</h2>
-                <p>Access your venue on all types of devices Anytime, Anywhere.</p>
-              </div>
-              <div class="col-md-8 col-sm-6 animated fadeIn">
-                <img src="img/cross-platform.png" alt="calendar" width="95%" style="border-radius: 5%;">
-              </div>
-            </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <a class="carousel-control" href="#myCarousel" role="button" data-slide="prev">
-        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-        <span class="sr-only">Previous</span>
-      </a>
-      <a class="carousel-control" style="left: auto; right: 0;" href="#myCarousel" role="button" data-slide="next">
-        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-        <span class="sr-only">Next</span>
-      </a>
-    </div><!-- /.carousel -->
+        </nav>
 
+    <div class="jumbotron" style="height:450px !important;background-image: url(img/4.png);background-size: cover;background-repeat: no-repeat;background-position: 50% 50%;">
+      <div class="container">
+      <center>
+      <br><br><br><br><br>
+        <img src="img/searchven.png" width=200px alt="Brand">
+        <h2 style="color:#fff">Where is your Event?</h2>
+        <br>
+        <div class="row">
+            <div class="col-lg-6 col-lg-offset-3">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <form action="search_next.php">
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="place" placeholder="Search places for your event... ">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-primary" type="submit" name="search"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                                </span>
+                            </div><!-- /input-group -->
+                        </form>
+                    </div>
+                </div>
+            </div><!-- /.col-lg-6 -->
+        </div><!-- /.row -->
+      </center>
+      </div>
+    </div>
+
+    
     <!-- Marketing messaging and featurettes
     ================================================== -->
     <!-- Wrap the rest of the page in another container to center all the content. -->
@@ -178,9 +165,8 @@
 
       <hr class="featurette-divider">
 
-      <!-- /END THE FEATURETTES -->
       <?php include("includes/footer.php"); ?>
-    </div><!-- /.container -->
+    </div> <!-- /container -->
     <script src="js/jquery-3.1.1.js"></script>
     <script src="bootstrap/js/bootstrap.min.js"></script>
   </body>

@@ -1,12 +1,15 @@
 <?php
     session_start();
-    include("includes/config.php");
-    include("includes/db.php");
-    include("includes/check.php");
+    require_once("includes/config.php");
+    require_once("includes/db.php");
+    require_once("includes/check.php");
     if(!isLoggedIn()){
       header("Location:login.php?err=" . urldecode("Please login to view your account"));
       exit();
+    }else{
+        require_once("admin/getAdmindetails.php");
     }
+    require("admin/trans_myaccount.php");
 ?>
 <!DOCTYPE php>
 <php lang="en">
@@ -20,7 +23,7 @@
     <meta name="author" content="">
     <link rel="icon" href="img/travenue.ico">
 
-    <title>Travenue | Dashboard</title>
+    <title><?php if(isset($venue_name)){echo $venue_name;}else{echo "Not set";}?> | Dashboard</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.css" rel="stylesheet">
@@ -32,7 +35,7 @@
     <link href="vendor/morrisjs/morris.css" rel="stylesheet">
     <!-- Custom Fonts -->
     <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
+    <link href="vendor/bootstrap-social/bootstrap-social.css" rel="stylesheet">
     <!-- php5 Shim and Respond.js IE8 support of php5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -46,7 +49,7 @@
     <div id="wrapper">
         <!-- Navigation -->
         <!-- Fixed navbar -->
-            <nav class="navbar navbar-inverse navbar-fixed-top animated fadeIn">
+            <nav class="navbar navbar-inverse navbar-fixed-top" style="background-color: #3a3a3a; color: #fff">
               <div class="container">
                 <div class="navbar-header">
                   <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -55,7 +58,9 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                   </button>
-                  <a class="navbar-brand" href="index.php">TRAVENUE</a>
+                  <a class="navbar-brand" href="index.php">
+                  <img src="img/gravenu.png" width=100px alt="Brand">
+                  </a>
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                   <ul class="nav navbar-nav navbar-right">
@@ -64,7 +69,13 @@
                       <li><a href="register.php">Register</a></li>
                       <li><p class="navbar-btn"><a href="#" class="btn btn-default"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Search</a></p></li>
                     <?php }else{?>
-                      <li><a href="#" data-toggle="modal" data-target=".bs-example-modal-sm"><i class="fa fa-sign-out"></i> Sign out</a></li>
+                      <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?php if(isset($fn)){echo $fn;}else{echo "User";}?> <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href=""><i class="fa fa-user"></i> Account</a></li>
+                            <li><a href="#" data-toggle="modal" data-target=".bs-example-modal-sm"><i class="fa fa-sign-out"></i> Sign out</a></li>
+                        </ul>
+                        </li>
                     <?php }?>
                   </ul>
                 </div><!--/.nav-collapse -->
@@ -90,22 +101,24 @@
               </div>
             </div>
 
-            <div class="navbar-default sidebar" role="navigation" style="position:fixed;">
+            <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
                         <li style="background-image: url(img/profile-bg.png);background-size: cover;background-repeat: no-repeat;background-position: 50% 50%;">
-                            <br><br>
+                            <br>
                               <center>
-                                <img src="img/4.png" width="60px" height="60px" style="border-radius:50%" alt="">
-                                <h6>Clash of Burgers</h6>
+                                <img <?php if(isset($vProfilePath)){echo "src='images/$vProfilePath'";}else{echo "src='img/default.png'";}?> width="60px" height="60px" class="img-thumbnail" alt="Venue Image">
+                                <h6 ><i class="fa fa-map-marker"></i> <?php if(isset($venue_name)){echo $venue_name;}?></h6>
                               </center>
-                          
                         </li>
                         <li>
                             <a href="#"><i class="fa fa-map-marker"></i>  Venue<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
                                     <a href="myaccount.php?viewmode=profile"><i class="fa fa-eye" aria-hidden="true"></i> View Profile</a>
+                                </li>
+                                <li>
+                                    <a href="myaccount.php?viewmode=gallery"><i class="fa fa-image" aria-hidden="true"></i> Venue Gallery</a>
                                 </li>
                                 <li>
                                     <a href="#" data-toggle="modal" data-target=".bs-example-modal-sm"><i class="fa fa-sign-out"></i> Sign out</a>
@@ -151,23 +164,20 @@
                     include("admin/bookreq.php");
                 }else if($mode == "alerts"){
                     include("admin/alerts.php");
+                }else if($mode == "gallery"){
+                    include("admin/gallery.php");
                 }else{
                     include("admin/dashboard.php");
                 }
             }else{
-                include("admin/dashboard.php");
+                include("admin/profile.php");
             }
         ?>
         </div>
         
         </div>
-        <!-- FOOTER -->
-        <footer><hr>
-        <br>
-            <!--<p class="pull-right"><a href="#">Back to top</a></p>-->
-           <center><p>&copy; 2017 Team PLP Venue Reservation. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p></center>
-           <br>
-        </footer>
+        <br><hr>
+        <?php include("includes/footer.php"); ?>
     <!-- jQuery -->
     <script src="js/jquery-3.1.1.js"></script>
     <!-- Bootstrap Core JavaScript -->
