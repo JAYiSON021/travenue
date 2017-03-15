@@ -11,12 +11,11 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" href="img/travenue.ico">
 
-    <title>TRAVENUE | Home</title>
+    <title>GRAVENUE | Search</title>
 
     <!-- Bootstrap core CSS -->
     <link href="bootstrap/css/bootstrap.css" rel="stylesheet">
@@ -68,10 +67,10 @@
         </div>
         </nav>
 
-    <div class="jumbotron" style="height:450px !important;background-image: url(img/4.png);background-size: cover;background-repeat: no-repeat;background-position: 50% 50%;">
+    <div class="jumbotron" style="height:620px !important;background-image: url(img/4.png);background-size: cover;background-repeat: no-repeat;background-position: 50% 50%;">
       <div class="container">
       <center>
-      <br><br><br><br><br>
+      <br><br><br><br><br><br><br>
         <img src="img/searchven.png" width=200px alt="Brand">
         <h2 style="color:#fff">Where is your Event?</h2>
         <br>
@@ -81,7 +80,7 @@
                     <div class="panel-body">
                         <form action="search_next.php">
                             <div class="input-group">
-                                <input type="text" class="form-control" name="place" placeholder="Search places for your event... ">
+                                <input type="text" class="form-control" name="place" placeholder="Search places for your event... " required>
                                 <span class="input-group-btn">
                                     <button class="btn btn-primary" type="submit" name="search"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
                                 </span>

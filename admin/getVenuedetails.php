@@ -3,6 +3,9 @@
     $result = $db->query($query);
     if($row = $result->fetch_assoc()){
         $venue_name     = $row['venue_name'];
+        $is_approved    = $row['is_approved'];
+        $overview       = $row['overview'];
+        $events         = $row['events'];
         $City           = $row['City'];
         $St_Address     = $row['St_Address'];
         $Brgy           = $row['Brgy'];

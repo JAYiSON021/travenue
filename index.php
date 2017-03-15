@@ -15,7 +15,7 @@
     <meta name="author" content="">
     <link rel="icon" href="img/travenue.ico">
 
-    <title>TRAVENUE | Home</title>
+    <title>GRAVENUE | Admin Home</title>
 
     <!-- Bootstrap core CSS -->
     <link href="bootstrap/css/bootstrap.css" rel="stylesheet">

@@ -59,11 +59,13 @@ if(isset($_POST['vGalUpload'])){
             $vArea       = mysqli_real_escape_string($db, $_POST['vArea']);
             $vSeat       = mysqli_real_escape_string($db, $_POST['vSeat']);
             $vStand      = mysqli_real_escape_string($db, $_POST['vStand']);
+            $vOverview   = mysqli_real_escape_string($db, $_POST['vOverview']);
+            $vEvents     = mysqli_real_escape_string($db, $_POST['vEvents']);
             $vtype       = mysqli_real_escape_string($db, implode( ',' , $_POST['vtype'] ));
             $vAmenities  = mysqli_real_escape_string($db, implode( ',' , $_POST['vAmenities'] ));
             $vUniform    = mysqli_real_escape_string($db, implode( ',' , $_POST['vUniform'] ));
 
-            $updatequery = "UPDATE venue_profiles SET venue_name='$vupdname', City='$vAddCity', St_Address='$vAddSt', Brgy='$vAddBrgy', Landmark='$vAddLM', Venue_email='$vupdemail', Number='$vupdnum', website='$vupdweb', Open_Status='$vOpenStat', Food='$vFood', Beverages='$vBev', avg_cost='$vAveCost', area='$vArea', max_seating='$vSeat', max_standing='$vStand', Venue_type='$vtype', Amenities='$vAmenities', Uniformity='$vUniform' WHERE venue_id='$vid'";
+            $updatequery = "UPDATE venue_profiles SET venue_name='$vupdname', City='$vAddCity', St_Address='$vAddSt', Brgy='$vAddBrgy', Landmark='$vAddLM', Venue_email='$vupdemail', Number='$vupdnum', website='$vupdweb', Open_Status='$vOpenStat', Food='$vFood', Beverages='$vBev', avg_cost='$vAveCost', area='$vArea', max_seating='$vSeat', max_standing='$vStand', Venue_type='$vtype', Amenities='$vAmenities', Uniformity='$vUniform', overview='$vOverview', events='$vEvents' WHERE venue_id='$vid'";
             $result = mysqli_query($db,$updatequery); 
             if($result){
                 header("Location:myaccount.php?successUpdate=" . urldecode("Venue details successfully updated!"));

@@ -102,7 +102,7 @@
                     <?php } ?>
                     <form class="form-signin" action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>" method='post'>
                         <center>
-                            <h3 class="form-signin-heading">Sign In</h3>
+                            <h3 class="form-signin-heading">Admin Sign In</h3>
                             <br>
                                 <ul class="nav nav-pills nav-justified">
                                     <li role="presentation" class="active"><a href="">Venue Admin</a></li>

@@ -1,6 +1,13 @@
     <div class="row">
         <div class="col-lg-12">
             <h1 class="page-header">Dashboard</h1>
+            <?php if($is_approved == "0"){ ?>
+            <h5>Venue Search Status : <a tabindex="0" role="button" data-toggle="popover" data-placement="right" data-trigger="focus" title="Venue Search Status" data-content="Your Venue Search Status indicates that your venue profile is current NOT SEARCAHBLE through GRAVENUE SEARCH. Our awesome content team will check your Venue Profile once your it is submitted for approval then make it searchable online. (Click the button below to make an approval request)"><span class="label label-warning">OFFLINE</span></a></h5>
+                <a class="btn btn-primary" href="" role="button">Request for venue profile approval</a>  
+            <?php }elseif($is_approved == "1"){ ?>
+                <h5>Venue Search Status : <a tabindex="0" role="button" data-toggle="popover" data-placement="right" data-trigger="focus" title="Venue Search Status" data-content="Your Venue Search Status indicates that your venue profile is currently SEARCAHBLE through GRAVENUE SEARCH."><span class="label label-success">ONLINE</span></a></h5>
+            <?php } ?>
+            <hr>
         </div>
         <!-- /.col-lg-12 -->
     </div>

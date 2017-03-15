@@ -98,7 +98,7 @@
                     <?php } ?>
                     <form class="form-signin" action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>" method='post'>
                         <center>
-                            <h3 class="form-signin-heading">Sign In</h3>
+                            <h3 class="form-signin-heading">Looker Sign In</h3>
                             <br>
                                 <ul class="nav nav-pills nav-justified">
                                     <li role="presentation"><a href="login.php">Venue Admin</a></li>

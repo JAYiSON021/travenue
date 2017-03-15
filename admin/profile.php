@@ -1,7 +1,14 @@
 
 <div class="row">
     <div class="col-lg-12">
-        <h2 class="page-header"><?php if(isset($venue_name)){echo $venue_name;}?></h2>
+        <h2 class="page-header"><?php if(isset($venue_name)){echo $venue_name;}?> </h2>
+        <?php if($is_approved == "0"){ ?>
+            <h5>Venue Search Status : <a tabindex="0" role="button" data-toggle="popover" data-placement="right" data-trigger="focus" title="Venue Search Status" data-content="Your Venue Search Status indicates that your venue profile is current NOT SEARCAHBLE through GRAVENUE SEARCH. Our awesome content team will check your Venue Profile once your it is submitted for approval then make it searchable online. (Click the button below to make an approval request)"><span class="label label-warning">OFFLINE</span></a></h5>
+            <a class="btn btn-primary" href="" role="button">Request for venue profile approval</a>  
+        <?php }elseif($is_approved == "1"){ ?>
+            <h5>Venue Search Status : <a tabindex="0" role="button" data-toggle="popover" data-placement="right" data-trigger="focus" title="Venue Search Status" data-content="Your Venue Search Status indicates that your venue profile is currently SEARCAHBLE through GRAVENUE SEARCH."><span class="label label-success">ONLINE</span></a></h5>
+        <?php } ?>
+        <hr>
     </div>
 
     <div class="col-md-8 col-sm-12">
@@ -21,7 +28,16 @@
     <?php } ?>
         <div class="col-md-12 col-sm-12">
         <form class="form-horizontal" action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>" method='post'>
-            <fieldset>
+            <fieldset>               
+<!-- Venue Overview -->      
+                <legend>Venue Overview</legend>
+                <div class="form-group">
+                    <label for="inputVOverview" class="col-lg-3 control-label">Venue Overview</label>
+                    <div class="col-lg-9">
+                        <textarea name="vOverview" id="inputVOverview" cols="53" maxlength="500" rows="6" placeholder="Write your venue overview"><?php if(isset($overview)){echo $overview;}?></textarea>
+                        <span class="help-block">This will give the looker an overview about what is your venue in General.</span>
+                    </div>
+                </div>
 <!-- Venue Details -->            
                 <legend>Venue Details</legend>
                 <div class="form-group">
@@ -104,6 +120,16 @@
                         </select>
                     </div>
                 </div>
+                <br><br>
+<!-- Catered Events -->            
+                <legend>Catered Events</legend>
+                <div class="form-group">
+                    <label for="inputvEvents" class="col-lg-3 control-label">Catered Events</label>
+                    <div class="col-lg-9">
+                        <textarea name="vEvents" id="inputvEvents" cols="53" maxlength="500" rows="6" placeholder="e.g Birthdays, Wedding, Graduation"><?php if(isset($events)){echo $events;}?></textarea>
+                        <span class="help-block">Please seperate the catered events with commas (,)</span>
+                    </div>
+                </div>               
                 <br><br>
 <!-- Check All the Applicable Details -->                
                 <legend>Check All the Applicable Details</legend>
@@ -274,7 +300,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="inputweb" class="col-lg-3 control-label">Uniformity</label>
+                    <label for="inputweb" class="col-lg-3 control-label">Look &amp; Feel</label>
     <!-- Uniformity -->                    
                     <div class="col-lg-9">
             <!-- First Column -->
@@ -346,7 +372,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="inputArea" class="col-lg-3 control-label">Area (sq.ft)</label>
+                    <label for="inputArea" class="col-lg-3 control-label">Area (sq.m)</label>
                     <div class="col-lg-9">
                         <input type="number" class="form-control" name="vArea" value="<?php if(isset($area)){echo $area;}?>" id="inputArea" placeholder="Area in sq.ft">
                     </div>
